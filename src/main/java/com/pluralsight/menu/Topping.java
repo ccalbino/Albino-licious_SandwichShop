@@ -15,4 +15,10 @@ public class Topping {
         //size logic that gives price based on meat/ cheese/ extra toppings?
         return (ge);
     }
+
+    @Override
+    public String toString() {
+        return name + "ordered these toppings : " + type ; //plus extra toppings. rewrite
+
+    }
 }

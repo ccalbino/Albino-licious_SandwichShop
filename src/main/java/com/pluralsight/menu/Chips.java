@@ -3,10 +3,10 @@ package com.pluralsight.menu;
 import com.pluralsight.Buyable;
 
 public class Chips implements Buyable {
-    private String type;
+    private String flavor;
 
-    public Chips(String type){
-        this.type = type;
+    public Chips(String flavor){
+        this.flavor = flavor;
 
     }
 
@@ -22,6 +22,6 @@ public class Chips implements Buyable {
 
     @Override
     public String toString() {
-        return getDescription() + getPrice(); //rewrite
+        return "you ordered" + getDescription() + "$" + getPrice(); //rewrite
     }
 }

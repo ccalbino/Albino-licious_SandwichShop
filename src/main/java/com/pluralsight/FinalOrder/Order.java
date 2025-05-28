@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderSummary {
+public class Order {
     private String customerName;
     private LocalDateTime orderTime;
     private List<Buyable> items = new ArrayList<>();
 
-    public OrderSummary(String customerName, LocalDateTime orderTime) {
+    public Order(String customerName, LocalDateTime orderTime) {
         this.customerName = customerName;
         this.orderTime = orderTime;
     }
@@ -38,10 +38,9 @@ public class OrderSummary {
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); //build order
 
         //add logic
-
-
+        return (toString());
     }
 }

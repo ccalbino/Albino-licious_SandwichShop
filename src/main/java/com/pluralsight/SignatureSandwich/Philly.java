@@ -1,4 +1,6 @@
-package com.pluralsight.menu;
+package com.pluralsight.SignatureSandwich;
+
+import com.pluralsight.menu.Sandwich;
 
 public class Philly extends Sandwich {
 

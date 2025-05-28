@@ -5,7 +5,7 @@ import com.pluralsight.Buyable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Sandwich implements Buyable {
+public  class Sandwich implements Buyable {
     protected int size;
     protected String breadType;
     protected boolean toasted;
@@ -29,6 +29,12 @@ public abstract class Sandwich implements Buyable {
     public double getPrice() {
         //price logic
 
+        return getPrice();
+    }
+
+    @Override
+    public String getDescription() {
+        return "";
     }
     // for (Topping t : toppings) rewrite
 }
