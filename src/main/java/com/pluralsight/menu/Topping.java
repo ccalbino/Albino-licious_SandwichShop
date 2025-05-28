@@ -13,7 +13,7 @@ public class Topping {
 
     public double getPrice(int size){
         //size logic that gives price based on meat/ cheese/ extra toppings?
-        return (ge);
+        return (getPrice(4));
     }
 
     @Override

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private String customerName;
-    private LocalDateTime orderTime;
-    private List<Buyable> items = new ArrayList<>();
+    private final String customerName;
+    private final LocalDateTime orderTime;
+    private final List<Buyable> items = new ArrayList<>();
 
     public Order(String customerName, LocalDateTime orderTime) {
         this.customerName = customerName;

@@ -1,4 +1,4 @@
 package com.pluralsight.FinalOrder;
 
-public class Cooupon {
+public class Coupon {
 }

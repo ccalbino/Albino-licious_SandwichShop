@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Console {
 
-    Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
 
     public int promptForInt(String prompt) {
@@ -100,6 +100,19 @@ public class Console {
         }
 
         return result;
+    }
+
+    public static String getString(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
+    }
+
+    public boolean getBoolean(String prompt) {
+        String input;
+        do {
+            input = getString(prompt + " (y/n): ").toLowerCase();
+        } while (!input.equals("y") && !input.equals("n"));
+        return input.equals("y");
     }
 
 
