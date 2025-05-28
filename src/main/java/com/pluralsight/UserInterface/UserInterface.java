@@ -102,13 +102,10 @@ public class UserInterface {
                     order.addItem(signature);
                     break;
                 case 3:
-                    order.addItem(new Drink(
-                            console.promptForString("Drink size: "),
-                            console.promptForString("Flavor: ")));
+                    addDrink(order);
                     break;
                 case 4:
-                    order.addItem(new Chips(
-                            console.promptForString("Type of Chip: ")));
+                    addChips(order);
                     break;
 //                case 5:
 //                    String cuponCode = console.promptForString("Coupon code: ");
@@ -168,6 +165,44 @@ public class UserInterface {
 
         if (option == 1) return new BLT();
         return new Philly(); // fallback for option 2
+    }
+
+    public void addDrink(Order order) {
+        String[] drinkSizes = {"Small", "Medium", "Large"};
+        String[] drinkFlavors = {"Cola", "Root Beer", "Sprite", "Welch" , "Lemonade", "Orange Soda", "Water"};
+
+        // Select drink size
+        System.out.println("\nChoose drink size:");
+        for (int i = 0; i < drinkSizes.length; i++) {
+            System.out.println((i + 1) + ") " + drinkSizes[i]);
+        }
+        int sizeChoice = console.promptForInt("Select size (1–" + drinkSizes.length + "): ");
+        String size = drinkSizes[sizeChoice - 1];
+
+        // Select drink flavor
+        System.out.println("\nChoose drink flavor:");
+        for (int i = 0; i < drinkFlavors.length; i++) {
+            System.out.println((i + 1) + ") " + drinkFlavors[i]);
+        }
+        int flavorChoice = console.promptForInt("Select flavor (1–" + drinkFlavors.length + "): ");
+        String flavor = drinkFlavors[flavorChoice - 1];
+
+        // Add drink to order
+        order.addItem(new Drink(size, flavor));
+        System.out.println("\nAdded: " + size + " " + flavor + " drink to order.\n");
+    }
+
+    public void addChips(Order order) {
+        String[] chipOptions = {"BBQ", "Salt & Vinegar", "Sour Cream & Onion", "Original"};
+        System.out.println("\nChoose your chips:");
+        for (int i = 0; i < chipOptions.length; i++) {
+            System.out.println((i + 1) + ") " + chipOptions[i]);
+        }
+        int chipChoice = console.promptForInt("Select chips (1–" + chipOptions.length + "): ");
+        String chips = chipOptions[chipChoice - 1];
+        order.addItem(new Chips(chips));
+        System.out.println("\nAdded: " + chips + " chips to order.\n");
+
     }
 
 }

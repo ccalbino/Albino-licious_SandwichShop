@@ -10,22 +10,30 @@ public class Order {
     private final String customerName;
     private final LocalDateTime orderTime;
     private final List<Buyable> items = new ArrayList<>();
+    private Coupon coupon;
 
     public Order(String customerName, LocalDateTime orderTime) {
         this.customerName = customerName;
         this.orderTime = orderTime;
     }
-
-    public void addItem(Buyable item){
-        items.add(item);
+    public String getCustomerName() {
+        return customerName;
     }
 
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public void addItem(Buyable item){
+        items.add(item);
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
+    }
+
+    public List<Buyable> getItems() {
+        return items;
     }
 
     public double getTotal() {
@@ -38,9 +46,15 @@ public class Order {
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder(); //build order
-
-        //add logic
-        return (toString());
+        StringBuilder sb = new StringBuilder("Customer: " + customerName + "\nTime: " + orderTime + "\n\n");
+        for (Buyable item : items) {
+            sb.append(item).append("\n\n");
+        }
+        if (coupon != null) {
+            sb.append("Coupon: ").append(coupon.getCode())
+                    .append(" (").append(coupon.getDiscountPercentage()).append("% off)\n");
+        }
+        sb.append("Total: $").append(getTotal());
+        return sb.toString();
     }
 }

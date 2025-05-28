@@ -17,11 +17,11 @@ public class Chips implements Buyable {
 
     @Override
     public String getDescription() {
-        return "";
+        return flavor + " chips";
     }
 
     @Override
     public String toString() {
-        return "you ordered" + getDescription() + "$" + getPrice(); //rewrite
+        return "you ordered" + getDescription() + "$" + getPrice();
     }
 }

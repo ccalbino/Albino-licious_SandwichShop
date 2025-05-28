@@ -13,21 +13,24 @@ public class Drink implements Buyable {
 
     @Override
     public double getPrice() {
+        if (size.equalsIgnoreCase("Small")) {
+            return 2.00;
+        } else if (size.equalsIgnoreCase("Medium")) {
+            return 2.50;
+        } else if (size.equalsIgnoreCase("Large")) {
+            return 3.00;
+        }
 
-        //rewrite Logic
-
-
-        return 0;
+        return 0.00;
     }
-
     @Override
-    public String getDescription() { //rewrite
-        return "";
+    public String getDescription() {
+        return size + " " + flavor + " drink";
     }
 
     @Override
     public String toString() {
-        return getDescription() + getPrice(); //rewrite
+        return getDescription() + " -$" + getPrice();
     }
 }
 

@@ -45,7 +45,7 @@ public class CustomizeSignature {
             String selected = options[choice - 1];
             boolean extra = askExtra && console.getBoolean("Add extra " + selected + "?");
             sandwich.addTopping(new Topping(selected, type, extra));
-            System.out.println(selected + "added");
+            System.out.println(selected + " added");
         }
     }
 }

@@ -12,8 +12,23 @@ public class Topping {
     }
 
     public double getPrice(int size){
-        //size logic that gives price based on meat/ cheese/ extra toppings?
-        return (getPrice(4));
+
+        if (!isExtra && size == 4) {
+            return 1.00;
+        } else if (!isExtra && size == 8) {
+            return 2.00;
+        } else if (!isExtra && size == 12) {
+            return 3.00;
+        }else if (isExtra && size == 4) {
+            return 1.00 + .50;
+        } else if (isExtra && size == 8) {
+            return 2.00 + 1.00;
+        } else if (isExtra && size == 12) {
+            return 3.00 + 1.50;
+        }
+
+        return 0.0;
+
     }
 
     @Override
