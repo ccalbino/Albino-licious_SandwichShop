@@ -121,7 +121,7 @@ public class UserInterface {
                     checkout(order);
                     break;
                 case 0:
-                    System.out.println("Order Cancelled!");
+                    cancelOrder();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again \n");
@@ -271,10 +271,26 @@ public class UserInterface {
     }
 
     private void applyCoupon(Order order) {
-        String code = console.promptForString("Coupon code: ");
-        double percent = console.promptForInt("% discount: ");
-        order.setCoupon(new Coupon(code, percent));
-        System.out.println("Coupon '" + code + "' applied (" + percent + "% off).\n");
+        while (true) {
+            String code = console.promptForString("Enter coupon code (or press Enter to skip): ");
+            if (code.isBlank()) {
+                System.out.println("No coupon applied.\n");
+                break;
+            }
+
+            if (Coupon.isCouponValid(code)) {
+                try {
+                    Coupon coupon = new Coupon(code);
+                    order.setCoupon(coupon);
+                    System.out.printf("Coupon '%s' applied (%.0f%% off).\n\n", code.toUpperCase(), coupon.getDiscountPercentage() * 100);
+                    break;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage() + "\n");
+                }
+            } else {
+                System.out.println("Invalid or already-used coupon code. Try again.\n");
+            }
+        }
     }
 
     private int checkout(Order order) {
@@ -306,6 +322,10 @@ public class UserInterface {
                 System.out.println("Invalid input. Please enter a number.");
             }
         }
+    }
+
+    private void cancelOrder() {
+        System.out.println("\nOrder has been canceled.");
     }
 
 

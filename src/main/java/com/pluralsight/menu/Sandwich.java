@@ -43,7 +43,20 @@ public class Sandwich implements Buyable {
 
     @Override
     public String getDescription() {
-        return String.format("%d\" %s%s", size, breadType, toasted ? " (toasted)" : ""); //if toasted
+        StringBuilder sb = new StringBuilder();
+        sb.append(size).append("\" ").append(breadType);
+        if (toasted) sb.append(" (toasted)");
+        sb.append(" Sandwich\n");
+
+        if (!toppings.isEmpty()) {
+            sb.append("Toppings:\n");
+            for (Topping topping : toppings) {
+                sb.append("  - ").append(topping.getName());
+                if (topping.isExtra()) sb.append(" (extra)");
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 
     @Override
@@ -53,12 +66,7 @@ public class Sandwich implements Buyable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getDescription()).append("\n");
-        for (Topping t : toppings) {
-            sb.append(" - ").append(t).append("\n");
-        }
-        sb.append(String.format("Price: $%.2f", getPrice()));
-        return sb.toString();
+        return getName() + ":\n" + getDescription() + "Price: $" + String.format("%.2f", getPrice());
     }
 
 

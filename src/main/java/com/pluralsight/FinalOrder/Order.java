@@ -32,6 +32,10 @@ public class Order {
         this.coupon = coupon;
     }
 
+    public Coupon getCoupon() {
+        return this.coupon;
+    }
+
     public List<Buyable> getItems() {
         return items;
     }
@@ -43,6 +47,9 @@ public class Order {
         }
         return total;
     }
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
 
     @Override
     public String toString(){
@@ -51,8 +58,7 @@ public class Order {
             sb.append(item).append("\n\n");
         }
         if (coupon != null) {
-            sb.append("Coupon: ").append(coupon.getCode())
-                    .append(" (").append(String.format("%.0f", coupon.getDiscountPercentage())).append("% off)\n");
+            sb.append("Coupon: ").append(coupon.getCode()).append(" (").append(String.format("%.0f", coupon.getDiscountPercentage() * 100)).append("% off)\n");
         }
         if (coupon != null) {
             sb.append(String.format("Total: $%.2f", coupon.applyDiscount(getTotal())));

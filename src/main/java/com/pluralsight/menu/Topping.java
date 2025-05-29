@@ -58,6 +58,10 @@ public class Topping {
         return 0.0; // Default if unknown
     }
 
+    public boolean isExtra() {
+        return isExtra;
+    }
+
 
 
 
