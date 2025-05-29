@@ -1,6 +1,6 @@
 package com.pluralsight.FileManager;
 
-import com.pluralsight.Buyable;
+import com.pluralsight.menu.Buyable;
 import com.pluralsight.FinalOrder.Order;
 
 import java.io.BufferedWriter;
@@ -24,14 +24,16 @@ public class FileManager {
         String fileName = "receipts/" + formattedDateTime + ".txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
-            System.out.println("Printing receipt to: " + fileName); // DEBUG LINE
+            System.out.println("Printing receipt to: " + fileName);
             if (order != null) {
 
                 // Header
                 bw.write("--------------------------------------------\n");
                 bw.write("Bino-licious SANDWICH SHOP\n");
+                bw.write("123 Sesame St\n");
+                bw.write("Brooklyn, NY\n");
                 bw.write("--------------------------------------------\n");
-                bw.write("Cashier: DELI-AUTO-SYSTEM\n");
+                bw.write("Cashier: AUTO-BOT\n");
 
                 // Order items
                 for (Buyable item : order.getItems()) {

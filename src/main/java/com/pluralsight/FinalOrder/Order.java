@@ -1,6 +1,6 @@
 package com.pluralsight.FinalOrder;
 
-import com.pluralsight.Buyable;
+import com.pluralsight.menu.Buyable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class Order {
         return customerName;
     }
 
-    public LocalDateTime getOrderTime() {
-        return orderTime;
-    }
+//    public LocalDateTime getOrderTime() {
+//        return orderTime;
+//    }
 
     public void addItem(Buyable item){
         items.add(item);

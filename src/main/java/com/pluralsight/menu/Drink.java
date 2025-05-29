@@ -1,7 +1,5 @@
 package com.pluralsight.menu;
 
-import com.pluralsight.Buyable;
-
 public class Drink implements Buyable {
     private String size;
     private String flavor;

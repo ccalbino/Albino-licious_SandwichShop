@@ -64,6 +64,6 @@ public class Topping {
 
 
     public String toString() {
-        return name + (isExtra ? " (extra)" : "") + " - " + type;
+        return name + (isExtra ? " (extra)" : "") + " - " + type; //if extra
     }
 }

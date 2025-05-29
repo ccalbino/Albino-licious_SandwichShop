@@ -130,7 +130,19 @@ public class UserInterface {
     }
 
     private Sandwich buildCustomSandwich() {
-        int size = console.promptForInt("Size (4\", 8\", 12\"): ");
+        int size = 0;
+        while (true) {
+            try {
+                size = console.promptForInt("Size (4\", 8\", 12\"): ");
+                if (size == 4 || size == 8 || size == 12) {
+                    break;
+                } else {
+                    System.out.println("Please enter a valid size: 4, 8, or 12.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
 
         // Bread selection menu
         String[] breads = {"White", "Wheat", "Rye", "Wrap"};
@@ -150,14 +162,14 @@ public class UserInterface {
         return sandwich;
     }
 
-    private void addToppings(Sandwich sandwich, String[] names, String type, boolean askExtra) {
-        for (String name : names) {
-            if (console.getBoolean("Add " + name + "?")) {
-                boolean extra = askExtra && console.getBoolean("Extra " + name + "?");
-                sandwich.addTopping(new Topping(name, type, extra));
-            }
-        }
-    }
+//    private void addToppings(Sandwich sandwich, String[] names, String type, boolean askExtra) {
+//        for (String name : names) {
+//            if (console.getBoolean("Add " + name + "?")) {
+//                boolean extra = askExtra && console.getBoolean("Extra " + name + "?");
+//                sandwich.addTopping(new Topping(name, type, extra));
+//            }
+//        }
+//    }
     private void addCustomSandwich(Order order) {
         Sandwich sandwich = buildCustomSandwich();
         order.addItem(sandwich);

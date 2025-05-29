@@ -1,7 +1,5 @@
 package com.pluralsight.menu;
 
-import com.pluralsight.Buyable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +21,9 @@ public class Sandwich implements Buyable {
 
     }
 
-    public List<Topping> getToppings() {
-        return toppings;
-    }
+//    public List<Topping> getToppings() {
+//        return toppings;
+//    }
 
     private double getBasePrice(int size) {
         if (size == 4) return 5.5;
@@ -45,7 +43,7 @@ public class Sandwich implements Buyable {
 
     @Override
     public String getDescription() {
-        return String.format("%d\" %s%s", size, breadType, toasted ? " (toasted)" : "");
+        return String.format("%d\" %s%s", size, breadType, toasted ? " (toasted)" : ""); //if toasted
     }
 
     @Override
