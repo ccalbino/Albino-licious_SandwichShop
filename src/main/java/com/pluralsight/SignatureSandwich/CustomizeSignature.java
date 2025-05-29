@@ -17,7 +17,6 @@ public class CustomizeSignature {
     }
 
 
-
     public static void promptForExtras(Sandwich sandwich) {
         boolean wantsExtras = console.getBoolean("Would you like to add any extras?");
         if (!wantsExtras) {
@@ -39,13 +38,24 @@ public class CustomizeSignature {
             }
             System.out.println("0) Done");
 
-            int choice = console.promptForInt("Choose one: ");
-            if (choice == 0) break;
+            int choice;
+            try {
+                choice = console.promptForInt("Choose one: ");
+                if (choice == 0) break;
 
-            String selected = options[choice - 1];
-            boolean extra = askExtra && console.getBoolean("Add extra " + selected + "?");
-            sandwich.addTopping(new Topping(selected, type, extra));
-            System.out.println(selected + " added");
+                if (choice < 0 || choice > options.length) {
+                    System.out.println("Invalid selection. Please choose a number between 0 and " + options.length + ".");
+                    continue;
+                }
+
+                String selected = options[choice - 1];
+                boolean extra = askExtra && console.getBoolean("Add extra " + selected + "?");
+                sandwich.addTopping(new Topping(selected, type, extra));
+                System.out.println(selected + " added");
+
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
         }
     }
 }

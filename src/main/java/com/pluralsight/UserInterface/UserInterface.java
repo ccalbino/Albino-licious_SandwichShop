@@ -146,11 +146,25 @@ public class UserInterface {
 
         // Bread selection menu
         String[] breads = {"White", "Wheat", "Rye", "Wrap"};
-        System.out.println("\nChoose your bread:");
-        for (int i = 0; i < breads.length; i++) {
-            System.out.println((i + 1) + ") " + breads[i]);
+        int breadChoice = 0;
+        while (true) {
+            System.out.println("\nChoose your bread:");
+            for (int i = 0; i < breads.length; i++) {
+                System.out.println((i + 1) + ") " + breads[i]);
+            }
+
+            try {
+                breadChoice = console.promptForInt("Select bread (1–" + breads.length + "): ");
+                if (breadChoice >= 1 && breadChoice <= breads.length) {
+                    break;
+                } else {
+                    System.out.println("Please select a number between 1 and " + breads.length + ".");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
         }
-        int breadChoice = console.promptForInt("Select bread (1–" + breads.length + ")\n") ;
+
         String bread = breads[breadChoice - 1];
 
         boolean toasted = console.getBoolean("Toasted?");
@@ -185,40 +199,75 @@ public class UserInterface {
 
     public void addDrink(Order order) {
         String[] drinkSizes = {"Small", "Medium", "Large"};
-        String[] drinkFlavors = {"Cola", "Root Beer", "Sprite", "Welch" , "Lemonade", "Orange Soda", "Water"};
+        String[] drinkFlavors = {"Cola", "Root Beer", "Sprite", "Welch", "Lemonade", "Orange Soda", "Water"};
 
-        // Select drink size
-        System.out.println("\nChoose drink size:");
-        for (int i = 0; i < drinkSizes.length; i++) {
-            System.out.println((i + 1) + ") " + drinkSizes[i]);
+        String size = "";
+        while (true) {
+            System.out.println("\nChoose drink size:");
+            for (int i = 0; i < drinkSizes.length; i++) {
+                System.out.println((i + 1) + ") " + drinkSizes[i]);
+            }
+
+            try {
+                int sizeChoice = console.promptForInt("Select size (1–" + drinkSizes.length + "): ");
+                if (sizeChoice >= 1 && sizeChoice <= drinkSizes.length) {
+                    size = drinkSizes[sizeChoice - 1];
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Please choose a number between 1 and " + drinkSizes.length + ".");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
         }
-        int sizeChoice = console.promptForInt("Select size (1–" + drinkSizes.length + "): ");
-        String size = drinkSizes[sizeChoice - 1];
 
-        // Select drink flavor
-        System.out.println("\nChoose drink flavor:");
-        for (int i = 0; i < drinkFlavors.length; i++) {
-            System.out.println((i + 1) + ") " + drinkFlavors[i]);
+        String flavor = "";
+        while (true) {
+            System.out.println("\nChoose drink flavor:");
+            for (int i = 0; i < drinkFlavors.length; i++) {
+                System.out.println((i + 1) + ") " + drinkFlavors[i]);
+            }
+
+            try {
+                int flavorChoice = console.promptForInt("Select flavor (1–" + drinkFlavors.length + "): ");
+                if (flavorChoice >= 1 && flavorChoice <= drinkFlavors.length) {
+                    flavor = drinkFlavors[flavorChoice - 1];
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Please choose a number between 1 and " + drinkFlavors.length + ".");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
         }
-        int flavorChoice = console.promptForInt("Select flavor (1–" + drinkFlavors.length + "): ");
-        String flavor = drinkFlavors[flavorChoice - 1];
 
-        // Add drink to order
         order.addItem(new Drink(size, flavor));
         System.out.println("\nAdded: " + size + " " + flavor + " drink to order.\n");
     }
 
     public void addChips(Order order) {
         String[] chipOptions = {"BBQ", "Salt & Vinegar", "Sour Cream & Onion", "Original"};
-        System.out.println("\nChoose your chips:");
-        for (int i = 0; i < chipOptions.length; i++) {
-            System.out.println((i + 1) + ") " + chipOptions[i]);
-        }
-        int chipChoice = console.promptForInt("Select chips (1–" + chipOptions.length + "): ");
-        String chips = chipOptions[chipChoice - 1];
-        order.addItem(new Chips(chips));
-        System.out.println("\nAdded: " + chips + " chips to order.\n");
 
+        while (true) {
+            System.out.println("\nChoose your chips:");
+            for (int i = 0; i < chipOptions.length; i++) {
+                System.out.println((i + 1) + ") " + chipOptions[i]);
+            }
+
+            try {
+                int chipChoice = console.promptForInt("Select chips (1–" + chipOptions.length + "): ");
+                if (chipChoice >= 1 && chipChoice <= chipOptions.length) {
+                    String chips = chipOptions[chipChoice - 1];
+                    order.addItem(new Chips(chips));
+                    System.out.println("\nAdded: " + chips + " chips to order.\n");
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Please choose a number between 1 and " + chipOptions.length + ".");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
     }
 
     private void applyCoupon(Order order) {
@@ -242,11 +291,21 @@ public class UserInterface {
     }
 
     private Sandwich chooseSignatureSandwich() {
-        System.out.println("\n Signature Sandwich Options\n 1) BLT\n 2) Philly Cheese Steak");
-        int option = console.promptForInt("Select:  ");
+        int option = 0;
+        while (true) {
+            System.out.println("\nSignature Sandwich Options");
+            System.out.println("1) BLT");
+            System.out.println("2) Philly Cheese Steak");
 
-        if (option == 1) return new BLT();
-        return new Philly(); // fallback for option 2
+            try {
+                option = console.promptForInt("Select (1 or 2): ");
+                if (option == 1) return new BLT();
+                if (option == 2) return new Philly();
+                System.out.println("Invalid choice. Please select 1 or 2.");
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
     }
 
 
