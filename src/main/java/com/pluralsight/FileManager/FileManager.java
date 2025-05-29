@@ -4,33 +4,38 @@ import com.pluralsight.Buyable;
 import com.pluralsight.FinalOrder.Order;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FileManager {
+    public void print(Order order) {
+        //defines fileName and creates folder if it doesn't exist
+        File folder = new File("receipts");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+        LocalDateTime now = LocalDateTime.now();
+        String formattedDateTime = now.format(formatter);
+        String fileName = "receipts/" + formattedDateTime + ".txt";
 
-        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-        private final LocalDateTime fileTime = LocalDateTime.now();
-        private final String formattedDate = fileTime.format(dateTimeFormatter) + ".txt";
-
-        public void print(Order order) {
-            if (order == null) return;
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("receipts/" + formattedDate, true));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            System.out.println("Printing receipt to: " + fileName); // DEBUG LINE
+            if (order != null) {
 
                 // Header
                 bw.write("--------------------------------------------\n");
-                bw.write("Bino-licous SANDWICH SHOP\n");
+                bw.write("Bino-licious SANDWICH SHOP\n");
                 bw.write("--------------------------------------------\n");
                 bw.write("Cashier: DELI-AUTO-SYSTEM\n");
 
                 // Order items
                 for (Buyable item : order.getItems()) {
-                    bw.write("\n" + item.getDescription() + " - $" + item.getPrice());
+                    bw.write("\n" + item.getDescription() + " - $" + String.format("%.2f", item.getPrice()));
                 }
 
                 // Total and footer
@@ -38,15 +43,21 @@ public class FileManager {
 
                 if (order.getCustomerName() != null && order.getTotal() > 0) {
                     bw.write(String.format("\nOrdered by: %s", order.getCustomerName()));
-                    bw.write("\nThank you for choosing DELI-cious!\n");
+                    bw.write("\nThank you for choosing Bino-licious!\n");
+
                 }
 
-                bw.close();
-                System.out.println("Receipt saved to: receipts/" + formattedDate);
+                System.out.println("Receipt successfully saved.");
 
-            } catch (IOException e) {
-                System.out.println("Failed to write receipt: " + e.getMessage());
             }
+        } catch (IOException e) {
+            System.out.println("Failed to write receipt: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
 }
+
+
+
+
 

@@ -1,0 +1,13 @@
+--------------------------------------------
+Bino-licious SANDWICH SHOP
+--------------------------------------------
+Cashier: DELI-AUTO-SYSTEM
+
+8" white (toasted) sandwich with: Bacon, Cheddar, Lettuce, Tomato, Ranch - $10.50
+Large Sprite drink - $3.00
+Original chips - $1.50
+
+TOTAL: $15.00
+
+Ordered by: Matt
+Thank you for choosing Bino-licious!

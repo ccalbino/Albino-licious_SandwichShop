@@ -21,6 +21,11 @@ public class Chips implements Buyable {
     }
 
     @Override
+    public String getName() {
+        return flavor;
+    }
+
+    @Override
     public String toString() {
         return getDescription() + String.format(" - $%.2f", getPrice());
     }

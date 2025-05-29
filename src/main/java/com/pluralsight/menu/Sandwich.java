@@ -5,7 +5,7 @@ import com.pluralsight.Buyable;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Sandwich implements Buyable {
+public class Sandwich implements Buyable {
     protected int size;
     protected String breadType;
     protected boolean toasted;
@@ -18,6 +18,7 @@ public  class Sandwich implements Buyable {
     }
 
     public void addTopping(Topping toppings) {
+      this.toppings.add(toppings);
 
 
     }
@@ -45,6 +46,11 @@ public  class Sandwich implements Buyable {
     @Override
     public String getDescription() {
         return String.format("%d\" %s%s", size, breadType, toasted ? " (toasted)" : "");
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 
     @Override

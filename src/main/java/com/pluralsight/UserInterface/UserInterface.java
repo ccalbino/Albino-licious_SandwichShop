@@ -62,13 +62,21 @@ public class UserInterface {
     private static void viewMenu(){
 
         System.out.println("""
-                \nSandwich Menu\s
+                                                   \n Sandwich Menu\s
                 Sizes: 4" ($5.50), 8" ($7.00), 12" ($8.50)\s
                 Breads: White, Wheat, Rye, Wrap\s
                 Meats: steak, ham, salami, roast beef, chicken, and bacon\s
                 Cheeses: american, provolone, cheddar, and swiss\s
                 Veggies: lettuce, peppers, onions, tomatoes, jalapeños, cucumbers, pickles, guacamole, mushrooms\s
                 Sauces: mayo, mustard, ketchup, ranch, thousand islands, vinaigrette\s
+                              --------------- All non-meat and cheese toppings are FREE! ---------------\s
+                Base Meats Price : 4" --> $1.00 (Extra = +$.50)    8" --> $2.00 (Extra = +$1.00)       12" --> $3.00 (Extra = +$2.25)\s
+                Base Cheese Price : 4" --> $.75 (Extra = +$.50)    8" --> $1.50 (Extra = +$.60)        12" --> $2.25 (Extra = +$.90)\s
+                                                         Drinks Price\s
+                                    Small --> $2.00     Medium --> $2.50        Large --> $3.00 \s
+                                                           Chips Price\s
+                                                       ALL CHIPS ARE $1.50\s
+               
                 """);
     }
 
