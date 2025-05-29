@@ -42,7 +42,7 @@ public class FileManager {
                 }
 
                 bw.close();
-                System.out.println("🧾 Receipt saved to: receipts/" + formattedDate);
+                System.out.println("Receipt saved to: receipts/" + formattedDate);
 
             } catch (IOException e) {
                 System.out.println("Failed to write receipt: " + e.getMessage());

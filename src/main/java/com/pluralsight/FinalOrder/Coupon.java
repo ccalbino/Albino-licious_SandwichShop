@@ -5,7 +5,7 @@ public class Coupon {
         private final double discountPercentage;
 
         public Coupon(String code, double discountPercentage) {
-            this.code = code;
+            this.code = "10OFF";
             this.discountPercentage = discountPercentage;
         }
 
@@ -14,7 +14,7 @@ public class Coupon {
         }
 
         public String getCode() {
-            return code;
+            return this.code;
         }
 
         public double getDiscountPercentage() {

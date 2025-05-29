@@ -52,9 +52,15 @@ public class Order {
         }
         if (coupon != null) {
             sb.append("Coupon: ").append(coupon.getCode())
-                    .append(" (").append(coupon.getDiscountPercentage()).append("% off)\n");
+                    .append(" (").append(String.format("%.0f", coupon.getDiscountPercentage())).append("% off)\n");
         }
-        sb.append("Total: $").append(getTotal());
-        return sb.toString();
+        if (coupon != null) {
+            sb.append(String.format("Total: $%.2f", coupon.applyDiscount(getTotal())));
+            return sb.toString();
+        }else {
+            sb.append(String.format("Total: $%.2f",getTotal()));
+            return sb.toString();
+        }
+
     }
 }

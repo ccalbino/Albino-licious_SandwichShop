@@ -49,11 +49,11 @@ public  class Sandwich implements Buyable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getDescription());
+        StringBuilder sb = new StringBuilder(getDescription()).append("\n");
         for (Topping t : toppings) {
-            sb.append("\n - ").append(t);
+            sb.append(" - ").append(t).append("\n");
         }
-        sb.append("\nPrice: $").append(getPrice());
+        sb.append(String.format("Price: $%.2f", getPrice()));
         return sb.toString();
     }
 

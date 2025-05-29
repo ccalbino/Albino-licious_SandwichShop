@@ -30,7 +30,7 @@ public class Drink implements Buyable {
 
     @Override
     public String toString() {
-        return getDescription() + " -$" + getPrice();
+        return getDescription() + String.format(" - $%.2f", getPrice());
     }
 }
 

@@ -1,4 +1,5 @@
 package com.pluralsight.UserInterface;
+import com.pluralsight.FileManager.FileManager;
 import com.pluralsight.FinalOrder.Coupon;
 import com.pluralsight.FinalOrder.Order;
 import com.pluralsight.SignatureSandwich.BLT;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
 
 public class UserInterface {
     private final Console console = new Console();
-   // private FileManager fileManager;
+    private FileManager fileManager;
 
 
     public void init() {
-       // fileManager = new FileManager();
+       fileManager = new FileManager();
 
         userInterface();
 
@@ -94,12 +95,10 @@ public class UserInterface {
             option = console.promptForInt(orderPrompt);
             switch (option) {
                 case 1:
-                    order.addItem(buildCustomSandwich());
+                    addCustomSandwich(order);
                     break;
                 case 2:
-                    Sandwich signature = chooseSignatureSandwich();
-                    CustomizeSignature.customizeSandwich(signature);
-                    order.addItem(signature);
+                    addSignatureSandwich(order);
                     break;
                 case 3:
                     addDrink(order);
@@ -107,19 +106,12 @@ public class UserInterface {
                 case 4:
                     addChips(order);
                     break;
-//                case 5:
-//                    String cuponCode = console.promptForString("Coupon code: ");
-//                    double percent = console.promptForInt("% discount: " );
-//                    order.setCoupon(new Coupon(code, percent));
-//                    break;
-//                case 6:
-//                    System.out.println("\nORDER SUMMARY\n" + order);
-//                    if (console.getBoolean("Confirm order?")){
-//                        ReceiptPrinter.print(order);
-//                        history.addOrder(order);
-//                        option = 0; //exits loop after successful checkout
-//                    }
-//                    break;
+                case 5:
+                    applyCoupon(order);
+                    break;
+                case 6:
+                    checkout(order);
+                    break;
                 case 0:
                     System.out.println("Order Cancelled!");
                     break;
@@ -158,13 +150,17 @@ public class UserInterface {
             }
         }
     }
+    private void addCustomSandwich(Order order) {
+        Sandwich sandwich = buildCustomSandwich();
+        order.addItem(sandwich);
+        System.out.println("Custom sandwich added to order.\n");
+    }
 
-    private Sandwich chooseSignatureSandwich() {
-        System.out.println("\n Signature Sandwich Options\n 1) BLT\n 2) Philly Cheese Steak");
-        int option = console.promptForInt("Select:  ");
-
-        if (option == 1) return new BLT();
-        return new Philly(); // fallback for option 2
+    private void addSignatureSandwich(Order order) {
+        Sandwich signature = chooseSignatureSandwich();
+        CustomizeSignature.customizeSandwich(signature);
+        order.addItem(signature);
+        System.out.println("Signature sandwich added to order.\n");
     }
 
     public void addDrink(Order order) {
@@ -204,5 +200,36 @@ public class UserInterface {
         System.out.println("\nAdded: " + chips + " chips to order.\n");
 
     }
+
+    private void applyCoupon(Order order) {
+        String code = console.promptForString("Coupon code: ");
+        double percent = console.promptForInt("% discount: ");
+        order.setCoupon(new Coupon(code, percent));
+        System.out.println("Coupon '" + code + "' applied (" + percent + "% off).\n");
+    }
+
+    private int checkout(Order order) {
+        System.out.println("\nORDER SUMMARY\n" + order);
+
+        if (console.getBoolean("Confirm order?")) {
+            new FileManager().print(order); // Save only to file
+            System.out.println("Order confirmed and receipt saved.\n");
+            return 0;
+        } else {
+            System.out.println("Order not confirmed.\n");
+            return -1;
+        }
+    }
+
+    private Sandwich chooseSignatureSandwich() {
+        System.out.println("\n Signature Sandwich Options\n 1) BLT\n 2) Philly Cheese Steak");
+        int option = console.promptForInt("Select:  ");
+
+        if (option == 1) return new BLT();
+        return new Philly(); // fallback for option 2
+    }
+
+
+
 
 }

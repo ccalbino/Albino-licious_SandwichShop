@@ -22,6 +22,6 @@ public class Chips implements Buyable {
 
     @Override
     public String toString() {
-        return "you ordered" + getDescription() + "$" + getPrice();
+        return getDescription() + String.format(" - $%.2f", getPrice());
     }
 }
