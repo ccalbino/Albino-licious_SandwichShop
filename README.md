@@ -72,3 +72,7 @@ receipts
 This snippet taught me the power of using a HashSet to manage state and uniqueness efficiently in a program. The usedCoupons set tracks which coupon codes have already been applied, ensuring a coupon can’t be reused in the same session. The validCoupons set acts like a whitelist of allowed codes. Both sets gave me valuable insight into when and why you’d use a Set over something like a List.
 A HashSet was perfect here because it prevents duplicates automatically and lets me write intuitive logic. Before this, I thought of collections mainly as lists of things. This example showed me that choosing the right collection type (like a Set for uniqueness) makes logic safer, simpler, and more efficient. It also taught me how to use Set.of(...) to create immutable sets for constants — a clean, modern Java feature that avoids bugs.
 ---
+# 📊🥪FlowChart & File Structure 
+
+![Screenshot 2025-05-30 023055](https://github.com/user-attachments/assets/3b569e9f-2eba-47a1-a0ad-b0595979fe5e)
+
