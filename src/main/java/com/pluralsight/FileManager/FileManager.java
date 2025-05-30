@@ -33,50 +33,52 @@ public class FileManager {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             System.out.println("Printing receipt to: " + fileName);
 
-            if (order != null) {
-                bw.write("--------------------------------------------\n");
-                bw.write("Bino-licious SANDWICH SHOP\n");
-                bw.write("123 Sesame St\n");
-                bw.write("Brooklyn, NY\n");
-                bw.write("--------------------------------------------\n");
-                bw.write("Cashier: AUTO-BOT\n");
+            bw.write("--------------------------------------------\n");
+            bw.write("Bino-licious SANDWICH SHOP\n");
+            bw.write("123 Sesame St\n");
+            bw.write("Brooklyn, NY\n");
+            bw.write("--------------------------------------------\n");
+            bw.write("Cashier: AUTO-BOT\n");
 
-                // List all items in the order
-                for (Buyable item : order.getItems()) {
-                    bw.write("\n" + item.getDescription() + " - $" + String.format("%.2f", item.getPrice()));
-                    bw.write("\n");
-                }
-
-                // Calculate totals (with and without coupon)
-                double originalTotal = order.getTotal();
-                double discountedTotal = originalTotal;
-                if (order.getCoupon() != null) {
-                    discountedTotal = order.getCoupon().applyDiscount(originalTotal);
-                }
-
-                // Show totals
-                bw.write(String.format("\n\nOriginal Total: $%.2f\n", originalTotal));
-                if (order.getCoupon() != null) {
-                    bw.write(String.format("Discounted Total: $%.2f\n", discountedTotal));
-                    bw.write("Coupon applied: " + order.getCoupon().getCode() + "\n");
-                }
-
-                // Print tip if any
-                if (tip > 0) {
-                    bw.write(String.format("Tip: $%.2f\n", tip));
-                }
-
-                // Print final total (discounted + tip)
-                double finalTotal = (order.getCoupon() != null ? discountedTotal : originalTotal) + tip;
-                bw.write(String.format("Final Total: $%.2f\n", finalTotal));
-
-                if (order.getCustomerName() != null && originalTotal > 0) {
-                    bw.write(String.format("\nOrdered by: %s at %s", order.getCustomerName(), formattedTime));
-                    bw.write("\nThank you for choosing Bino-licious!\n");
-                }
-
-                System.out.println("Receipt successfully saved.");
+            // List all items in the order
+            for (Buyable item : order.getItems()) {
+                bw.write("\n" + item.getDescription() + " - $" + String.format("%.2f", item.getPrice()));
+                bw.write("\n");
             }
+
+            // Calculate totals (with and without coupon)
+            double originalTotal = order.getTotal();
+            double discountedTotal = originalTotal;
+            if (order.getCoupon() != null) {
+                discountedTotal = order.getCoupon().applyDiscount(originalTotal);
+            }
+
+            // Show totals
+            bw.write(String.format("\n\nOriginal Total: $%.2f\n", originalTotal));
+            if (order.getCoupon() != null) {
+                bw.write(String.format("Discounted Total: $%.2f\n", discountedTotal));
+                bw.write("Coupon applied: " + order.getCoupon().getCode() + "\n");
+            }
+            //optional note
+            if (order.getNote() != null && !order.getNote().isBlank()) {
+                bw.write("\nCustomer Note: " + order.getNote() + "\n");
+            }
+
+            // Print tip if any
+            if (tip > 0) {
+                bw.write(String.format("Tip: $%.2f\n", tip));
+            }
+
+            // Print final total (discounted + tip)
+            double finalTotal = (order.getCoupon() != null ? discountedTotal : originalTotal) + tip;
+            bw.write(String.format("Final Total: $%.2f\n", finalTotal));
+
+            if (order.getCustomerName() != null && originalTotal > 0) {
+                bw.write(String.format("\nOrdered by: %s at %s", order.getCustomerName(), formattedTime));
+                bw.write("\nThank you for choosing Bino-licious!\n");
+            }
+
+            System.out.println("Receipt successfully saved.");
         } catch (IOException e) {
             System.out.println("Failed to write receipt: " + e.getMessage());
             e.printStackTrace();

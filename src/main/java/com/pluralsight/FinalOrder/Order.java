@@ -12,6 +12,7 @@ public class Order {
     private final LocalDateTime orderTime;
     private final List<Buyable> items = new ArrayList<>();
     private Coupon coupon;
+    private String note;
 
     public Order(String customerName, LocalDateTime orderTime) {
         this.customerName = customerName;
@@ -54,6 +55,14 @@ public class Order {
     // Returns the timestamp of the order
     public LocalDateTime getOrderTime() {
         return orderTime;
+    }
+
+    public void  setNote(String note){
+        this.note = note;
+    }
+
+    public String getNote() {
+        return note;
     }
 
     // Returns a formatted summary of the order, including items, coupon (if any), and total cost

@@ -292,8 +292,14 @@ public class UserInterface {
     }
 
 // Displays order summary and prompts user to confirm and if they want to tip; saves to file if confirmed
-private int checkout(Order order) {
+    private int checkout(Order order) {
     System.out.println("\nORDER SUMMARY\n" + order);
+
+    //Ask for a customer note before confirming
+    String note = console.promptForString("Would you like to add a note to your order? (press Enter to skip): ");
+    if (!note.isBlank()) {
+    order.setNote(note);
+    }
 
     if (console.getBoolean("Confirm order?")) {
         // Prompt for tip
