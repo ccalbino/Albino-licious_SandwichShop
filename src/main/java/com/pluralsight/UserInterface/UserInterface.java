@@ -5,6 +5,7 @@ import com.pluralsight.FinalOrder.Order;
 import com.pluralsight.SignatureSandwich.BLT;
 import com.pluralsight.SignatureSandwich.CustomizeSignature;
 import com.pluralsight.SignatureSandwich.Philly;
+import com.pluralsight.console.ColorCodes;
 import com.pluralsight.console.Console;
 import com.pluralsight.menu.Chips;
 import com.pluralsight.menu.Drink;
@@ -59,25 +60,29 @@ public class UserInterface {
         } while (option != 0);
     }
 
-    private static void viewMenu(){
+    private static void viewMenu() {
+        System.out.println(ColorCodes.CYAN + "\n=== SANDWICH MENU ===" + ColorCodes.RESET);
 
-        System.out.println("""
-                                                   \n Sandwich Menu\s
-                Sizes: 4" ($5.50), 8" ($7.00), 12" ($8.50)\s
-                Breads: White, Wheat, Rye, Wrap\s
-                Meats: steak, ham, salami, roast beef, chicken, and bacon\s
-                Cheeses: american, provolone, cheddar, and swiss\s
-                Veggies: lettuce, peppers, onions, tomatoes, jalapeños, cucumbers, pickles, guacamole, mushrooms\s
-                Sauces: mayo, mustard, ketchup, ranch, thousand islands, vinaigrette\s
-                              --------------- All non-meat and cheese toppings are FREE! ---------------\s
-                Base Meats Price : 4" --> $1.00 (Extra = +$.50)    8" --> $2.00 (Extra = +$1.00)       12" --> $3.00 (Extra = +$2.25)\s
-                Base Cheese Price : 4" --> $.75 (Extra = +$.50)    8" --> $1.50 (Extra = +$.60)        12" --> $2.25 (Extra = +$.90)\s
-                                                         Drinks Price\s
-                                    Small --> $2.00     Medium --> $2.50        Large --> $3.00 \s
-                                                           Chips Price\s
-                                                       ALL CHIPS ARE $1.50\s
-               
-                """);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Sizes:", "4\" ($5.50), 8\" ($7.00), 12\" ($8.50)") + ColorCodes.RESET);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Breads:", "White, Wheat, Rye, Wrap") + ColorCodes.RESET);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Meats:", "Steak, Ham, Salami, Roast Beef, Chicken, Bacon") + ColorCodes.RESET);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Cheeses:", "American, Provolone, Cheddar, Swiss") + ColorCodes.RESET);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Veggies:", "Lettuce, Peppers, Onions, Tomatoes, Jalapeños, Cucumbers, Pickles, Guacamole, Mushrooms") + ColorCodes.RESET);
+        System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Sauces:", "Mayo, Mustard, Ketchup, Ranch, Thousand Islands, Vinaigrette") + ColorCodes.RESET);
+
+        System.out.println(ColorCodes.GREEN + "\n--------------- All non-meat and cheese toppings are FREE! ---------------" + ColorCodes.RESET);
+
+        System.out.println(ColorCodes.PURPLE + "\nBase Meat Prices:" + ColorCodes.RESET);
+        System.out.println(String.format("  4\" --> $1.00 (Extra +$0.50)\n  8\" --> $2.00 (Extra +$1.00)\n  12\" --> $3.00 (Extra +$2.25)"));
+
+        System.out.println(ColorCodes.PURPLE + "\nBase Cheese Prices:" + ColorCodes.RESET);
+        System.out.println(String.format("  4\" --> $0.75 (Extra +$0.50)\n  8\" --> $1.50 (Extra +$0.60)\n  12\" --> $2.25 (Extra +$0.90)"));
+
+        System.out.println(ColorCodes.BLUE + "\nDrink Prices:" + ColorCodes.RESET);
+        System.out.println("  Small --> $2.00\n  Medium --> $2.50\n  Large --> $3.00");
+
+        System.out.println(ColorCodes.RED + "\nChips Price:" + ColorCodes.RESET);
+        System.out.println("  All chips are $1.50");
     }
 
     public void userOrder() {
@@ -124,7 +129,7 @@ public class UserInterface {
                     cancelOrder();
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again \n");
+                    System.out.println(ColorCodes.RED + "Invalid choice. Please try again \n" + ColorCodes.RESET);
             }
         } while (option != 0);
     }
@@ -137,10 +142,10 @@ public class UserInterface {
                 if (size == 4 || size == 8 || size == 12) {
                     break;
                 } else {
-                    System.out.println("Please enter a valid size: 4, 8, or 12.");
+                    System.out.println(ColorCodes.RED + "Please enter a valid size: 4, 8, or 12." + ColorCodes.RESET);
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
 
@@ -161,7 +166,7 @@ public class UserInterface {
                     System.out.println("Please select a number between 1 and " + breads.length + ".");
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
 
@@ -176,25 +181,17 @@ public class UserInterface {
         return sandwich;
     }
 
-//    private void addToppings(Sandwich sandwich, String[] names, String type, boolean askExtra) {
-//        for (String name : names) {
-//            if (console.getBoolean("Add " + name + "?")) {
-//                boolean extra = askExtra && console.getBoolean("Extra " + name + "?");
-//                sandwich.addTopping(new Topping(name, type, extra));
-//            }
-//        }
-//    }
     private void addCustomSandwich(Order order) {
         Sandwich sandwich = buildCustomSandwich();
         order.addItem(sandwich);
-        System.out.println("Custom sandwich added to order.\n");
+        System.out.println(ColorCodes.GREEN + "Custom sandwich added to order.\n" + ColorCodes.RESET);
     }
 
     private void addSignatureSandwich(Order order) {
         Sandwich signature = chooseSignatureSandwich();
         CustomizeSignature.customizeSandwich(signature);
         order.addItem(signature);
-        System.out.println("Signature sandwich added to order.\n");
+        System.out.println(ColorCodes.GREEN + "Signature sandwich added to order.\n" + ColorCodes.RESET);
     }
 
     public void addDrink(Order order) {
@@ -214,10 +211,10 @@ public class UserInterface {
                     size = drinkSizes[sizeChoice - 1];
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please choose a number between 1 and " + drinkSizes.length + ".");
+                    System.out.println(ColorCodes.RED + "Invalid choice. Please choose a number between 1 and " + drinkSizes.length + "." + ColorCodes.RESET);
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
 
@@ -234,10 +231,10 @@ public class UserInterface {
                     flavor = drinkFlavors[flavorChoice - 1];
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please choose a number between 1 and " + drinkFlavors.length + ".");
+                    System.out.println(ColorCodes.RED + "Invalid choice. Please choose a number between 1 and " + drinkFlavors.length + "." + ColorCodes.RESET);
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
 
@@ -262,10 +259,10 @@ public class UserInterface {
                     System.out.println("\nAdded: " + chips + " chips to order.\n");
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please choose a number between 1 and " + chipOptions.length + ".");
+                    System.out.println(ColorCodes.RED + "Invalid choice. Please choose a number between 1 and " + chipOptions.length + "." + ColorCodes.RESET);
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
     }
@@ -288,7 +285,7 @@ public class UserInterface {
                     System.out.println(e.getMessage() + "\n");
                 }
             } else {
-                System.out.println("Invalid or already-used coupon code. Try again.\n");
+                System.out.println(ColorCodes.RED + "Invalid or already-used coupon code. Try again.\n" + ColorCodes.RESET);
             }
         }
     }
@@ -298,10 +295,10 @@ public class UserInterface {
 
         if (console.getBoolean("Confirm order?")) {
             new FileManager().print(order); // Save only to file
-            System.out.println("Order confirmed and receipt saved.\n");
+            System.out.println(ColorCodes.GREEN + "Order confirmed and receipt saved.\n" + ColorCodes.RESET);
             return 0;
         } else {
-            System.out.println("Order not confirmed.\n");
+            System.out.println(ColorCodes.RED + "Order NOT confirmed\n" + ColorCodes.RESET);
             return -1;
         }
     }
@@ -317,9 +314,9 @@ public class UserInterface {
                 option = console.promptForInt("Select (1 or 2): ");
                 if (option == 1) return new BLT();
                 if (option == 2) return new Philly();
-                System.out.println("Invalid choice. Please select 1 or 2.");
+                System.out.println(ColorCodes.RED + "Invalid choice. Please select 1 or 2." + ColorCodes.RESET);
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ColorCodes.RED + "Invalid input. Please enter a number." + ColorCodes.RESET);
             }
         }
     }
