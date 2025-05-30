@@ -16,7 +16,7 @@ Prebuilt recipes like the BLT and Philly Cheese Steak, auto-filled with toppings
 - 🥤 Add Drinks
 Choose size and flavor from a list of popular options.
 
--🍟 Add Chips
+- 🍟 Add Chips
 Select from several flavors to complete your meal.
 
 - 🧾 Apply Coupons
@@ -30,6 +30,8 @@ Receipt is saved as a text file with a time-stamped filename (e.g., 20240527-183
 Automatically creates a receipts/ directory (if not already present) for clean organization. 
 ---
 ### Application Screens
+
+---
 
 ![Screenshot 2025-05-30 011359](https://github.com/user-attachments/assets/f12085cf-581b-4904-a88c-efba084b91d7)
 
@@ -63,10 +65,13 @@ TIP
 ![Screenshot 2025-05-30 012810](https://github.com/user-attachments/assets/da19f79c-e630-4cdc-a034-0dd986109ec8)
 
 
-receipts
+Receipts
 
 ---
-####🧠 Code I Learned the Most From
+
+#🧠 Code I Learned the Most From
+
+---
 ![Screenshot 2025-05-30 013929](https://github.com/user-attachments/assets/94fd891e-a128-4396-a8db-8785a79b322a)
 
 This snippet taught me the power of using a HashSet to manage state and uniqueness efficiently in a program. The usedCoupons set tracks which coupon codes have already been applied, ensuring a coupon can’t be reused in the same session. The validCoupons set acts like a whitelist of allowed codes. Both sets gave me valuable insight into when and why you’d use a Set over something like a List.
