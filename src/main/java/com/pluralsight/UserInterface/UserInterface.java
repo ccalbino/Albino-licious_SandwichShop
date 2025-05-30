@@ -10,18 +10,15 @@ import com.pluralsight.console.Console;
 import com.pluralsight.menu.Chips;
 import com.pluralsight.menu.Drink;
 import com.pluralsight.menu.Sandwich;
-import com.pluralsight.menu.Topping;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 
 public class UserInterface {
     private final Console console = new Console();
-    private FileManager fileManager;               // Manages file writing/reading
 
     // Initializes file manager and starts the main user interface
     public void init() {
-        fileManager = new FileManager();
         userInterface();
     }
 
@@ -69,10 +66,10 @@ public class UserInterface {
         System.out.println(ColorCodes.GREEN + "\n--------------- All non-meat and cheese toppings are FREE! ---------------" + ColorCodes.RESET);
 
         System.out.println(ColorCodes.PURPLE + "\nBase Meat Prices:" + ColorCodes.RESET);
-        System.out.println(String.format("  4\" --> $1.00 (Extra +$0.50)\n  8\" --> $2.00 (Extra +$1.00)\n  12\" --> $3.00 (Extra +$2.25)"));
+        System.out.println("  4\" --> $1.00 (Extra +$0.50)\n  8\" --> $2.00 (Extra +$1.00)\n  12\" --> $3.00 (Extra +$2.25)");
 
         System.out.println(ColorCodes.PURPLE + "\nBase Cheese Prices:" + ColorCodes.RESET);
-        System.out.println(String.format("  4\" --> $0.75 (Extra +$0.50)\n  8\" --> $1.50 (Extra +$0.60)\n  12\" --> $2.25 (Extra +$0.90)"));
+        System.out.println("  4\" --> $0.75 (Extra +$0.50)\n  8\" --> $1.50 (Extra +$0.60)\n  12\" --> $2.25 (Extra +$0.90)");
 
         System.out.println(ColorCodes.BLUE + "\nDrink Prices:" + ColorCodes.RESET);
         System.out.println("  Small --> $2.00\n  Medium --> $2.50\n  Large --> $3.00");
@@ -120,7 +117,9 @@ public class UserInterface {
                     applyCoupon(order);
                     break;
                 case 6:
-                    checkout(order);
+                    if (checkout(order) == 0) {
+                        return; // Exit userOrder after successful checkout
+                    }
                     break;
                 case 0:
                     cancelOrder(); // Exit order and discard progress
@@ -133,7 +132,7 @@ public class UserInterface {
 
     // Constructs a custom sandwich by prompting for size, bread, toast, and toppings
     private Sandwich buildCustomSandwich() {
-        int size = 0;
+        int size;
         while (true) {
             try {
                 size = console.promptForInt("Size (4\", 8\", 12\"): ");
@@ -149,7 +148,7 @@ public class UserInterface {
 
         // Prompt for bread type
         String[] breads = {"White", "Wheat", "Rye", "Wrap"};
-        int breadChoice = 0;
+        int breadChoice;
         while (true) {
             System.out.println("\nChoose your bread:");
             for (int i = 0; i < breads.length; i++) {
@@ -198,7 +197,7 @@ public class UserInterface {
         String[] drinkSizes = {"Small", "Medium", "Large"};
         String[] drinkFlavors = {"Cola", "Root Beer", "Sprite", "Welch", "Lemonade", "Orange Soda", "Water"};
 
-        String size = "";
+        String size;
         while (true) {
             System.out.println("\nChoose drink size:");
             for (int i = 0; i < drinkSizes.length; i++) {
@@ -218,7 +217,7 @@ public class UserInterface {
             }
         }
 
-        String flavor = "";
+        String flavor;
         while (true) {
             System.out.println("\nChoose drink flavor:");
             for (int i = 0; i < drinkFlavors.length; i++) {
@@ -292,64 +291,72 @@ public class UserInterface {
         }
     }
 
-// Displays order summary and prompts user to confirm; saves to file if confirmed
-    private int checkout(Order order) {
-        System.out.println("\nORDER SUMMARY\n" + order);
+// Displays order summary and prompts user to confirm and if they want to tip; saves to file if confirmed
+private int checkout(Order order) {
+    System.out.println("\nORDER SUMMARY\n" + order);
 
-        if (console.getBoolean("Confirm order?")) {
-            // Tip selection
-            double tip = 0;
-            while (true) {
-                System.out.println("\nWould you like to leave a tip?");
-                System.out.println("1) No tip");
-                System.out.println("2) 10%");
-                System.out.println("3) 15%");
-                System.out.println("4) 20%");
-                System.out.println("5) Custom amount");
+    if (console.getBoolean("Confirm order?")) {
+        // Prompt for tip
+        double tip = promptForTip(order);
 
-                int tipChoice = console.promptForInt("Choose an option: ");
+        // Save receipt to file while program is running
+        new FileManager().print(order, tip);
 
-                switch (tipChoice) {
-                    case 1:
-                        tip = 0;
-                        break;
-                    case 2:
-                        tip = order.getTotal() * 0.10;
-                        break;
-                    case 3:
-                        tip = order.getTotal() * 0.15;
-                        break;
-                    case 4:
-                        tip = order.getTotal() * 0.20;
-                        break;
-                    case 5:
-                        double customTip = console.promptForDouble("Enter custom tip amount: ");
-                        if (customTip < 0) {
-                            System.out.println("Tip cannot be negative.");
-                            continue; // Re-prompt
-                        }
-                        tip = customTip;
-                        break;
-                    default:
-                        System.out.println(ColorCodes.RED + "Invalid choice. Please select a number between 1 and 5." + ColorCodes.RESET);
-                        continue;
-                }
-                break; // Exit loop if input was valid
-            }
-
-            new FileManager().print(order, tip); // Pass tip to receipt
-            System.out.println(ColorCodes.GREEN + "Order confirmed and receipt saved.\n" + ColorCodes.RESET);
-            return 0;
-
-        } else {
-            System.out.println(ColorCodes.RED + "Order NOT confirmed\n" + ColorCodes.RESET);
-            return -1;
-        }
+        System.out.println(ColorCodes.GREEN + "Order confirmed and receipt saved.\n" + ColorCodes.RESET);
+        return 0; // You can continue running the program after this
+    } else {
+        System.out.println(ColorCodes.RED + "Order NOT confirmed\n" + ColorCodes.RESET);
+        return -1;
     }
+}
+//helper method to ask if user wants to tip at checkout
+    private double promptForTip(Order order) {
+
+        double tip;
+        while (true) {
+            System.out.println("\nWould you like to leave a tip?");
+            System.out.println("1) No tip");
+            System.out.println("2) 10%");
+            System.out.println("3) 15%");
+            System.out.println("4) 20%");
+            System.out.println("5) Custom amount");
+
+            int tipChoice = console.promptForInt("Choose an option: ");
+
+            switch (tipChoice) {
+                case 1:
+                    tip = 0;
+                    break;
+                case 2:
+                    tip = order.getTotal() * 0.10;
+                    break;
+                case 3:
+                    tip = order.getTotal() * 0.15;
+                    break;
+                case 4:
+                    tip = order.getTotal() * 0.20;
+                    break;
+                case 5:
+                    double customTip = console.promptForDouble("Enter custom tip amount: ");
+                    if (customTip < 0) {
+                        System.out.println("Tip cannot be negative.");
+                        continue;
+                    }
+                    tip = customTip;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select 1–5.");
+                    continue;
+            }
+            break;
+        }
+        return tip;
+    }
+
 
     // Prompts user to choose between two signature sandwiches
     private Sandwich chooseSignatureSandwich() {
-        int option = 0;
+        int option;
         while (true) {
             System.out.println("\nSignature Sandwich Options");
             System.out.println("1) BLT");
