@@ -17,19 +17,16 @@ import java.util.ArrayList;
 
 public class UserInterface {
     private final Console console = new Console();
-    private FileManager fileManager;
+    private FileManager fileManager;               // Manages file writing/reading
 
-
+    // Initializes file manager and starts the main user interface
     public void init() {
-       fileManager = new FileManager();
-
+        fileManager = new FileManager();
         userInterface();
-
-
     }
 
+    // Main menu loop that handles the start screen options
     public void userInterface() {
-
         String homeScreenPrompt =
                 """
                         \n== BINO-licious ===\s
@@ -37,7 +34,6 @@ public class UserInterface {
                         2) Start New Order\s
                         0) Exit\s
                         (1, 2, 0):\s
-                        
                         """;
 
         int option;
@@ -46,23 +42,23 @@ public class UserInterface {
             option = console.promptForInt(homeScreenPrompt);
             switch (option) {
                 case 1:
-                    viewMenu();
+                    viewMenu(); // Display sandwich shop menu
                     break;
                 case 2:
-                    userOrder();
+                    userOrder(); // Begin new order
                     break;
                 case 0:
-                    System.out.println("Goodbye!");
+                    System.out.println("Goodbye!"); // Exit application
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again \n");
+                    System.out.println("Invalid choice. Please try again \n"); // Handle invalid input
             }
         } while (option != 0);
     }
 
+    // Prints the formatted menu
     private static void viewMenu() {
         System.out.println(ColorCodes.CYAN + "\n=== SANDWICH MENU ===" + ColorCodes.RESET);
-
         System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Sizes:", "4\" ($5.50), 8\" ($7.00), 12\" ($8.50)") + ColorCodes.RESET);
         System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Breads:", "White, Wheat, Rye, Wrap") + ColorCodes.RESET);
         System.out.println(ColorCodes.YELLOW + String.format("%-12s %s", "Meats:", "Steak, Ham, Salami, Roast Beef, Chicken, Bacon") + ColorCodes.RESET);
@@ -85,6 +81,7 @@ public class UserInterface {
         System.out.println("  All chips are $1.50");
     }
 
+    // Starts the order interface where the user can add items to the order
     public void userOrder() {
         String name = console.promptForString("Enter customer name: ");
         Order order = new Order(name, LocalDateTime.now());
@@ -126,7 +123,7 @@ public class UserInterface {
                     checkout(order);
                     break;
                 case 0:
-                    cancelOrder();
+                    cancelOrder(); // Exit order and discard progress
                     break;
                 default:
                     System.out.println(ColorCodes.RED + "Invalid choice. Please try again \n" + ColorCodes.RESET);
@@ -134,6 +131,7 @@ public class UserInterface {
         } while (option != 0);
     }
 
+    // Constructs a custom sandwich by prompting for size, bread, toast, and toppings
     private Sandwich buildCustomSandwich() {
         int size = 0;
         while (true) {
@@ -149,7 +147,7 @@ public class UserInterface {
             }
         }
 
-        // Bread selection menu
+        // Prompt for bread type
         String[] breads = {"White", "Wheat", "Rye", "Wrap"};
         int breadChoice = 0;
         while (true) {
@@ -171,22 +169,23 @@ public class UserInterface {
         }
 
         String bread = breads[breadChoice - 1];
-
         boolean toasted = console.getBoolean("Toasted?");
         Sandwich sandwich = new Sandwich(size, bread, toasted);
 
-        // Numbered menu for toppings
+        // Call method to prompt for extra toppings
         CustomizeSignature.promptForExtras(sandwich);
 
         return sandwich;
     }
 
+    // Adds a custom sandwich to the order
     private void addCustomSandwich(Order order) {
         Sandwich sandwich = buildCustomSandwich();
         order.addItem(sandwich);
         System.out.println(ColorCodes.GREEN + "Custom sandwich added to order.\n" + ColorCodes.RESET);
     }
 
+    // Adds a pre-defined signature sandwich to the order and allows customization
     private void addSignatureSandwich(Order order) {
         Sandwich signature = chooseSignatureSandwich();
         CustomizeSignature.customizeSandwich(signature);
@@ -194,6 +193,7 @@ public class UserInterface {
         System.out.println(ColorCodes.GREEN + "Signature sandwich added to order.\n" + ColorCodes.RESET);
     }
 
+    // Prompts user to select a drink size and flavor, then adds drink to order
     public void addDrink(Order order) {
         String[] drinkSizes = {"Small", "Medium", "Large"};
         String[] drinkFlavors = {"Cola", "Root Beer", "Sprite", "Welch", "Lemonade", "Orange Soda", "Water"};
@@ -242,6 +242,7 @@ public class UserInterface {
         System.out.println("\nAdded: " + size + " " + flavor + " drink to order.\n");
     }
 
+    // Prompts user to select a chip flavor, then adds it to the order
     public void addChips(Order order) {
         String[] chipOptions = {"BBQ", "Salt & Vinegar", "Sour Cream & Onion", "Original"};
 
@@ -267,6 +268,7 @@ public class UserInterface {
         }
     }
 
+    // Allows user to input and apply a discount coupon code
     private void applyCoupon(Order order) {
         while (true) {
             String code = console.promptForString("Enter coupon code (or press Enter to skip): ");
@@ -290,19 +292,62 @@ public class UserInterface {
         }
     }
 
+// Displays order summary and prompts user to confirm; saves to file if confirmed
     private int checkout(Order order) {
         System.out.println("\nORDER SUMMARY\n" + order);
 
         if (console.getBoolean("Confirm order?")) {
-            new FileManager().print(order); // Save only to file
+            // Tip selection
+            double tip = 0;
+            while (true) {
+                System.out.println("\nWould you like to leave a tip?");
+                System.out.println("1) No tip");
+                System.out.println("2) 10%");
+                System.out.println("3) 15%");
+                System.out.println("4) 20%");
+                System.out.println("5) Custom amount");
+
+                int tipChoice = console.promptForInt("Choose an option: ");
+
+                switch (tipChoice) {
+                    case 1:
+                        tip = 0;
+                        break;
+                    case 2:
+                        tip = order.getTotal() * 0.10;
+                        break;
+                    case 3:
+                        tip = order.getTotal() * 0.15;
+                        break;
+                    case 4:
+                        tip = order.getTotal() * 0.20;
+                        break;
+                    case 5:
+                        double customTip = console.promptForDouble("Enter custom tip amount: ");
+                        if (customTip < 0) {
+                            System.out.println("Tip cannot be negative.");
+                            continue; // Re-prompt
+                        }
+                        tip = customTip;
+                        break;
+                    default:
+                        System.out.println(ColorCodes.RED + "Invalid choice. Please select a number between 1 and 5." + ColorCodes.RESET);
+                        continue;
+                }
+                break; // Exit loop if input was valid
+            }
+
+            new FileManager().print(order, tip); // Pass tip to receipt
             System.out.println(ColorCodes.GREEN + "Order confirmed and receipt saved.\n" + ColorCodes.RESET);
             return 0;
+
         } else {
             System.out.println(ColorCodes.RED + "Order NOT confirmed\n" + ColorCodes.RESET);
             return -1;
         }
     }
 
+    // Prompts user to choose between two signature sandwiches
     private Sandwich chooseSignatureSandwich() {
         int option = 0;
         while (true) {
@@ -321,11 +366,8 @@ public class UserInterface {
         }
     }
 
+    // Displays cancellation message
     private void cancelOrder() {
         System.out.println("\nOrder has been canceled.");
     }
-
-
-
-
 }

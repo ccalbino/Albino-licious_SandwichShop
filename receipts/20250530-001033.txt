@@ -1,0 +1,31 @@
+--------------------------------------------
+Bino-licious SANDWICH SHOP
+123 Sesame St
+Brooklyn, NY
+--------------------------------------------
+Cashier: AUTO-BOT
+
+8" white (toasted) Sandwich
+Toppings:
+  - Bacon
+  - Cheddar
+  - Lettuce
+  - Tomato
+  - Ranch
+ - $10.50
+
+8" white (toasted) Sandwich
+Toppings:
+  - Steak
+  - American
+  - Peppers
+  - Mayo
+ - $10.50
+
+
+Original Total: $21.00
+Tip: $50.00
+Final Total: $71.00
+
+Ordered by: Matt at 00:09
+Thank you for choosing Bino-licious!

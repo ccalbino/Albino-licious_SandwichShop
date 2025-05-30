@@ -15,30 +15,6 @@ public class BLT extends Sandwich {
         addTopping(new Topping("Ranch", "SAUCE", false));
     }
 
-//    public String getDescription() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(size).append("\" ").append(breadType);
-//        if (toasted) sb.append(" (toasted)");
-//        sb.append(" Sandwich\n");
-//
-//        if (!toppings.isEmpty()) {
-//            sb.append("Toppings:\n");
-//            for (Topping topping : toppings) {
-//                sb.append("  - ").append(topping.getName()).append("\n");
-//            }
-//        }
-//        return sb.toString();
-//    }
-//
-//    @Override
-//    public String getName() {
-//        return "BLT";
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return getName() + ":\n" + getDescription() + "\nPrice: $" + String.format("%.2f", getPrice());
-//    }
 @Override
 public String getName() {
     return "BLT";
